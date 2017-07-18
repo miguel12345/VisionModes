@@ -9,7 +9,7 @@ Shader "Unlit/ThermalShader"
 	}
 	SubShader
 	{
-		Tags { "ThermalType" = "Human" }
+		Tags { "Thermal" = "Enabled" }
 		Pass
 		{
 			CGPROGRAM
@@ -19,60 +19,13 @@ Shader "Unlit/ThermalShader"
 			#include "UnityCG.cginc"
 			#include "ThermalShaderCore.cginc"
 
-			float _ThermalPowExponentHuman;
-			float _ThermalMaxHuman;
+			float _ThermalPowExponent;
+			float _ThermalMax;
+			float _ThermalMin;
 			
 			fixed4 frag (v2f i) : SV_Target
 			{
-				return thermal_frag(i,_ThermalPowExponentHuman,_ThermalMaxHuman);
-			}
-			ENDCG
-		}
-
-	}
-
-	SubShader
-	{
-		Tags { "ThermalType" = "Environment" }
-		Pass
-		{
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			
-			#include "UnityCG.cginc"
-			#include "ThermalShaderCore.cginc"
-
-			float _ThermalPowExponentEnvironment;
-			float _ThermalMaxEnvironment;
-			
-			fixed4 frag (v2f i) : SV_Target
-			{
-				return thermal_frag(i,_ThermalPowExponentEnvironment,_ThermalMaxEnvironment);
-			}
-			ENDCG
-		}
-
-	}
-
-	SubShader
-	{
-		Tags { "ThermalType" = "Alien" }
-		Pass
-		{
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			
-			#include "UnityCG.cginc"
-			#include "ThermalShaderCore.cginc"
-
-			float _ThermalPowExponentAlien;
-			float _ThermalMaxAlien;
-			
-			fixed4 frag (v2f i) : SV_Target
-			{
-				return thermal_frag(i,_ThermalPowExponentAlien,_ThermalMaxAlien);
+				return thermal_frag(i,_ThermalPowExponent,_ThermalMax,_ThermalMin);
 			}
 			ENDCG
 		}

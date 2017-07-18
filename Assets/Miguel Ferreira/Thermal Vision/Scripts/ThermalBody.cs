@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class ThermalBody : MonoBehaviour {
+
+	[Range(0.5f,8f)]
+	public float ThermalDistribution = 4f;
+	[Range(0f,1f)]
+	public float MaximumTemperature = 1f;
+	[Range(0f,1f)]
+	public float MinimumTemperature = 0f;
+
 
 	List<Renderer> childrenRenderers = new List<Renderer>(8);
 
-	protected virtual string GetThermalTypeName() {return "";}
 
 	void OnEnable() {
 		GetComponentsInChildren<Renderer> (childrenRenderers);
@@ -14,7 +22,10 @@ public class ThermalBody : MonoBehaviour {
 		foreach (var childrenRenderer in childrenRenderers) {
 			var materials = childrenRenderer.sharedMaterials;
 			foreach (var material in materials) {
-				material.SetOverrideTag ("ThermalType", GetThermalTypeName());
+				material.SetOverrideTag ("Thermal", "Enabled");
+				material.SetFloat ("_ThermalPowExponent", ThermalDistribution);
+				material.SetFloat ("_ThermalMax", MaximumTemperature);
+				material.SetFloat ("_ThermalMin", MinimumTemperature);
 			}
 		}
 	}
@@ -23,7 +34,7 @@ public class ThermalBody : MonoBehaviour {
 		foreach (var childrenRenderer in childrenRenderers) {
 			var materials = childrenRenderer.sharedMaterials;
 			foreach (var material in materials) {
-				material.SetOverrideTag ("ThermalType", "");
+				material.SetOverrideTag ("Thermal", "");
 			}
 		}
 	}

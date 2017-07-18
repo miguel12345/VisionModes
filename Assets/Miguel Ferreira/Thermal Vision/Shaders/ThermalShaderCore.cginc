@@ -24,14 +24,14 @@ v2f vert (appdata v)
 	return o;
 }
 
-fixed4 thermal_frag (v2f i,float thermalPowExponent,float maxTemperature) : SV_Target
+fixed4 thermal_frag (v2f i,float thermalPowExponent,float maxTemperature,float thermalConstantTemperature) : SV_Target
 {
 	float3 viewDirection = normalize( _WorldSpaceCameraPos.xyz - i.posWorld.xyz );
 	float3 normalDirection = i.normalDir;
 
 	float dotProduct = saturate(dot(viewDirection,normalDirection));
 	float temperature = pow(dotProduct, thermalPowExponent);
-	temperature = lerp(0, maxTemperature,temperature);
+	temperature = lerp(0, maxTemperature,temperature) + + thermalConstantTemperature;
 	half4 col = tex2D(_ThermalColorLUT,temperature);
 	return col;
 }

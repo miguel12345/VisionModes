@@ -27,9 +27,11 @@ I considered the temperature going from cold to hot as a normalized value going 
 
 To actually get the temperature of a body, I end up using the dot product between the surface normal and the view direction. This dot product would then be used as the normalized temperature.
 
-To allow the customization of different temperature properties per object, I've implemented a ThermalBody base class with three subclasses, one for humans, another one for aliens, and a third one for the environment in general. These configuration settings allow the designers to choose the maximum temperature and heat distribution for those three types of objects.
+To allow the customization of different temperature properties per object, I've implemented a `ThermalBody` class with the following properties:
 
 ![](readme/thermal_effect_settings.png)
+
+The Thermal Body affects all children renderers.
 
 An example of the thermal effect in action is shown here
 
@@ -39,11 +41,11 @@ An example of the thermal effect in action is shown here
 
 There are some things we could improve here. First, adding a blur and/or a glow to the temperature values would give it a more "realistic" look. Also, it would be better to have a proper thermal texture map that could be applied to humans, instead of having to rely on the surface normal alone.
 
-Another point of interest is the lights. At the moment, the lights are not being considered as an heat-emitting source. This could be achieved by reading the emission values from the uniform values
+Another point of interest is the lights. At the moment, the lights are not being considered as an heat-emitting source automatically (though you can still add a `ThermalBody`component to them). This could be achieved by reading the emission values from the uniform values
 
 ```
 sampler2D _EmissionMap;
 half4 _EmissionColor;
 ```
 
-in our replacement shaders.
+in the thermal vision replacement shader.
