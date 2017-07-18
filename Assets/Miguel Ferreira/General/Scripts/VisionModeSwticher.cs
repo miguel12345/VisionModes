@@ -13,6 +13,7 @@ namespace MiguelFerreira {
 			public MonoBehaviour VisionMode;
 		}
 
+		public KeyCode NormalVisionModeKey;
 		public VisionModeTrigger[] VisionModeTriggers;
 		MonoBehaviour currentVisionMode;
 
@@ -30,7 +31,15 @@ namespace MiguelFerreira {
 
 					currentVisionMode = VisionModeTriggers [i].VisionMode;
 					currentVisionMode.enabled = !currentVisionMode.enabled;
+
+					return;
 				}
+			}
+
+
+			if (Input.GetKeyDown (NormalVisionModeKey) && currentVisionMode != null) {
+				currentVisionMode.enabled = false;
+				currentVisionMode = null;
 			}
 		}
 	}
