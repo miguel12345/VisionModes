@@ -9,7 +9,10 @@ Shader "Unlit/ThermalShader"
 	}
 	SubShader
 	{
-		Tags { "Thermal" = "Enabled" }
+		Tags { 
+		"Thermal" = "Cold"  
+		"Queue" = "Geometry"
+		}
 		Pass
 		{
 			CGPROGRAM
@@ -29,7 +32,33 @@ Shader "Unlit/ThermalShader"
 			}
 			ENDCG
 		}
+	}
 
+	SubShader {
+		Tags { 
+		"Thermal" = "Hot"
+		"Queue" = "Geometry+1"
+		 }
+		Pass
+		{
+			ZTest Always
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+			#include "ThermalShaderCore.cginc"
+
+			float _ThermalPowExponent;
+			float _ThermalMax;
+			float _ThermalMin;
+			
+			fixed4 frag (v2f i) : SV_Target
+			{
+				return thermal_frag(i,_ThermalPowExponent,_ThermalMax,_ThermalMin);
+			}
+			ENDCG
+		}
 	}
 
 }

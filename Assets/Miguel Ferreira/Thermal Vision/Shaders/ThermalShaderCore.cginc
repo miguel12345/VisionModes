@@ -19,7 +19,7 @@ v2f vert (appdata v)
 	v2f o;
 	o.vertex = UnityObjectToClipPos(v.vertex);
 	o.posWorld = mul(unity_ObjectToWorld, v.vertex);
-	o.normalDir = normalize( mul( float4( v.normal, 0.0 ), unity_WorldToObject ).xyz );;
+	o.normalDir = normalize( mul( float4( v.normal, 0.0 ), unity_WorldToObject ).xyz );
 
 	return o;
 }

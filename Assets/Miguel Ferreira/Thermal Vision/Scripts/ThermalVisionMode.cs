@@ -10,6 +10,7 @@ namespace MiguelFerreira {
 		public Shader thermalShader;
 		public Texture2D thermalLookUpTexture;
 		RenderingPath mainCameraOriginalRenderingPath;
+		bool mainCameraOriginalOcclusionCulling;
 
 		Camera _mainCamera;
 		Camera MainCamera {
@@ -26,13 +27,16 @@ namespace MiguelFerreira {
 
 			Shader.SetGlobalTexture ("_ThermalColorLUT",thermalLookUpTexture);
 
+			mainCameraOriginalOcclusionCulling = MainCamera.useOcclusionCulling;
 			mainCameraOriginalRenderingPath = MainCamera.renderingPath;
+			MainCamera.useOcclusionCulling = false;
 			MainCamera.renderingPath = RenderingPath.Forward;
 			MainCamera.SetReplacementShader (thermalShader, "Thermal");
 		}
 
 		void OnDisable() {
-			
+
+			MainCamera.useOcclusionCulling = mainCameraOriginalOcclusionCulling;
 			MainCamera.renderingPath = mainCameraOriginalRenderingPath;
 			MainCamera.ResetReplacementShader ();
 		}

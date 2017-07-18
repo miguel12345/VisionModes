@@ -22,7 +22,12 @@ public class ThermalBody : MonoBehaviour {
 		foreach (var childrenRenderer in childrenRenderers) {
 			var materials = childrenRenderer.sharedMaterials;
 			foreach (var material in materials) {
-				material.SetOverrideTag ("Thermal", "Enabled");
+				if (MaximumTemperature > 0.3f) {
+					material.SetOverrideTag ("Thermal", "Hot");
+				} else {
+					material.SetOverrideTag ("Thermal", "Cold");
+				}
+
 				material.SetFloat ("_ThermalPowExponent", ThermalDistribution);
 				material.SetFloat ("_ThermalMax", MaximumTemperature);
 				material.SetFloat ("_ThermalMin", MinimumTemperature);

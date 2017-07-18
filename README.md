@@ -37,6 +37,10 @@ An example of the thermal effect in action is shown here
 
 ![](readme/thermal_vision_effect_example.png)
 
+If a body is considered hot, it is rendered in another pass, on top of everything else. This allows the player to see hot bodies through walls:
+
+![](readme/thermal_through_walls.png)
+
 ### Improvements
 
 There are some things we could improve here. First, adding a blur and/or a glow to the temperature values would give it a more "realistic" look. Also, it would be better to have a proper thermal texture map that could be applied to humans, instead of having to rely on the surface normal alone.
