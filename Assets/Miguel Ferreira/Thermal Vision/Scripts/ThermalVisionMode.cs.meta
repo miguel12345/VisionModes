@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6e1de0e96b95b459dac29f43aa7fd60a
+timeCreated: 1500326621
+licenseType: Pro
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - thermalShader: {fileID: 4800000, guid: 062fa6346805f47709d114024b268eca, type: 3}
+  - thermalLookUpTexture: {fileID: 2800000, guid: 7b1ba85c728c94beb8b2c18f087f46a1,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
