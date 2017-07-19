@@ -15,8 +15,8 @@ namespace MiguelFerreira
 		public float MagneticEffectSpeed = 20;
 		[Range(0f,200f)]
 		public float MagneticEffectFrequency = 120;
-		[Range(0f,5f)]
-		public float MagneticEffectStrength = 1f;
+		[Range(0f,1f)]
+		public float MagneticEffectStrength = 0.1f;
 		
 		private Camera ownCamera;
 		private RenderingPath ownCameraOriginalRenderingPath;

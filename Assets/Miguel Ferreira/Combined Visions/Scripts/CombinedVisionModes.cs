@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MiguelFerreira;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Camera))]
+[DefaultExecutionOrder(-20)] //prevent nullrefence exceptions when exiting unity editor in the OnDisable() method
 public class CombinedVisionModes : MonoBehaviour
 {
 
@@ -11,6 +13,7 @@ public class CombinedVisionModes : MonoBehaviour
 	public Camera ThermalVisionSubEffectCamera;
 	public Camera EMVisionSubEffectCamera;
 
+	public Canvas ThumbnailContainerCanvas;
 	public RawImage NightVisionThumbnailRawImage;
 	public RawImage ThermalVisionThumbnailRawImage;
 	public RawImage EMVisionThumbnailRawImage;
@@ -54,15 +57,15 @@ public class CombinedVisionModes : MonoBehaviour
 		ThermalVisionThumbnailRawImage.texture = ThermalVisionSubEffectCamera.targetTexture;
 		EMVisionThumbnailRawImage.texture = EMVisionSubEffectCamera.targetTexture;
 
-		UpdateRawImageTransform(NightVisionThumbnailRawImage.GetComponent<RectTransform>(),renderTextureWidth,renderTextureHeight,0);
-		UpdateRawImageTransform(ThermalVisionThumbnailRawImage.GetComponent<RectTransform>(),renderTextureWidth,renderTextureHeight,1);
-		UpdateRawImageTransform(EMVisionThumbnailRawImage.GetComponent<RectTransform>(),renderTextureWidth,renderTextureHeight,2);
+		UpdateRawImageTransform(NightVisionThumbnailRawImage.GetComponent<RectTransform>(),renderTextureWidth,renderTextureHeight,-1);
+		UpdateRawImageTransform(ThermalVisionThumbnailRawImage.GetComponent<RectTransform>(),renderTextureWidth,renderTextureHeight,0);
+		UpdateRawImageTransform(EMVisionThumbnailRawImage.GetComponent<RectTransform>(),renderTextureWidth,renderTextureHeight,1);
 	}
 	
 	void UpdateRawImageTransform(RectTransform transform, int renderTextureWidth,int renderTextureHeight, int index)
 	{
 		transform.sizeDelta = new Vector2(renderTextureWidth,renderTextureHeight);
-		transform.anchoredPosition = new Vector2(50 + (renderTextureWidth+20)*index,20);
+		transform.anchoredPosition = new Vector2((renderTextureWidth+20)*index,20);
 	}
 
 
@@ -77,15 +80,18 @@ public class CombinedVisionModes : MonoBehaviour
 		ThermalVisionThumbnailRawImage.gameObject.SetActive(true);
 		EMVisionThumbnailRawImage.gameObject.SetActive(true);
 		
+		ThumbnailContainerCanvas.gameObject.SetActive(true);
+		
 		UpdateRawImages(_individualRenderTextureWidth, _individualRenderTexturHeight);
 	}
-
+	
 	private void OnDisable()
 	{
 		NightVisionSubEffectCamera.gameObject.SetActive(false);
 		ThermalVisionSubEffectCamera.gameObject.SetActive(false);
 		EMVisionSubEffectCamera.gameObject.SetActive(false);
 		
+		ThumbnailContainerCanvas.gameObject.SetActive(false);
 		
 		NightVisionThumbnailRawImage.gameObject.SetActive(false);
 		ThermalVisionThumbnailRawImage.gameObject.SetActive(false);

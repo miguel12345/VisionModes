@@ -38,7 +38,6 @@
 			}
 			
 			sampler2D _MainTex;
-			float4 _MainTex_TexelSize;
 			sampler2D _EMBlurredTex;
 			
 			float _MagneticEffectSpeed;
@@ -47,7 +46,7 @@
 
 			fixed4 frag (v2f i) : SV_Target
 			{
-			    half2 emTextureUVDisplacement = half2(sin(i.uv.y*_MagneticEffectFrequency + _Time.y*_MagneticEffectSpeed),0) * (_MainTex_TexelSize.x * _MagneticEffectStrength);
+			    float2 emTextureUVDisplacement = float2(sin(i.uv.y*_MagneticEffectFrequency + _Time.y*_MagneticEffectSpeed),0) * (_MagneticEffectStrength / 100);
 			    
 				fixed4 col = tex2D(_MainTex, i.uv);
 				fixed4 emCol = tex2D(_EMBlurredTex, i.uv + emTextureUVDisplacement).r * 2.5;
