@@ -53,3 +53,39 @@ half4 _EmissionColor;
 ```
 
 in the thermal vision replacement shader.
+
+## EM Vision
+
+For the EM effect I used the following screenshot from Splinter Cell Blacklist as the main source of inspiration:
+
+![](readme/em_vision_mode_example.png)
+
+By inspecting we can figure out some of its parts:
+
++ The objects that don't emit EM waves, are rendered with a depth shader (going from black to a kind of gray as the depth increases)
++ The objects that emit EM waves have a very strong white color that is slighty affected by the view dir normal
++ A slight blur is in place
++ A grain effect is used
+
+### Implementation
+
+I've added a `ElectroMagneticBody` that can be added to the objects that transmits _EM_ waves. 
+
+The rendering is achieved through a `CommandBuffer` that renders all _EM_ bodies to a separate texture, blurs it and composites that texture on top of the non-EM bodies (that are rendered with a simple depth shader).
+
+During the composite step, a "wavy" effect is added to simulate the magnetic radition:
+
+![](readme/em_shader_before.png)
+![](readme/em_shader_after.gif)
+
+Gifs exhibit heavy color banding. Here is a static image of the effect:
+
+![](readme/em_shader_after_static.png)
+
+I've also added the following configuration settings to customize the radiation effect:
+
+![](readme/em_mode_settings.png)
+
+### Problems and improvements
+
+Once again, there is come color banding going on, but this could be fixed with a grain post-process effect. I'd like to add a bit of normal-based _EM_ strength variation to make the magnetic bodies look less flat.
