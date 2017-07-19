@@ -13,13 +13,21 @@ public class ThermalBody : MonoBehaviour {
 	public float MinimumTemperature = 0f;
 
 
-	List<Renderer> childrenRenderers = new List<Renderer>(8);
+	private readonly List<Renderer> _childrenRenderers = new List<Renderer>(8);
 
+	private void Awake()
+	{
+		GetComponentsInChildren<Renderer> (_childrenRenderers);
+	}
 
-	void OnEnable() {
-		GetComponentsInChildren<Renderer> (childrenRenderers);
+	void OnEnable()
+	{
+		UpdateSubMaterialProperties();
+	}
 
-		foreach (var childrenRenderer in childrenRenderers) {
+	void UpdateSubMaterialProperties()
+	{
+		foreach (var childrenRenderer in _childrenRenderers) {
 			var materials = childrenRenderer.sharedMaterials;
 			foreach (var material in materials) {
 				if (MaximumTemperature > 0.3f) {
@@ -36,11 +44,19 @@ public class ThermalBody : MonoBehaviour {
 	}
 
 	void OnDisable() {
-		foreach (var childrenRenderer in childrenRenderers) {
+		foreach (var childrenRenderer in _childrenRenderers) {
 			var materials = childrenRenderer.sharedMaterials;
 			foreach (var material in materials) {
 				material.SetOverrideTag ("Thermal", "");
 			}
 		}
 	}
+	
+#if UNITY_EDITOR
+	private void Update()
+	{
+		//Enable quick changes in the editor
+		UpdateSubMaterialProperties();
+	}
+#endif
 }
