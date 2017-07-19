@@ -25,7 +25,7 @@ I considered the temperature going from cold to hot as a normalized value going 
 
 ![](readme/thermalLUT.png)
 
-To actually get the temperature of a body, I end up using the dot product between the surface normal and the view direction. This dot product would then be used as the normalized temperature.
+To actually get the temperature of a body, I ended up using the dot product between the surface normal and the view direction. This dot product would then be used as the normalized temperature.
 
 To allow the customization of different temperature properties per object, I've implemented a `ThermalBody` class with the following properties:
 
