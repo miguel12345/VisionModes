@@ -62,6 +62,7 @@ namespace MiguelFerreira
 			_commandBuffer = new CommandBuffer {name = "EM Bodies"};
 
 			ownCamera.AddCommandBuffer(CameraEvent.BeforeImageEffects, _commandBuffer);
+			RebuildCommandBuffer();
 		}
 
 		private void OnDisable()

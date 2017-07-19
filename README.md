@@ -89,3 +89,17 @@ I've also added the following configuration settings to customize the radiation 
 ### Problems and improvements
 
 Once again, there is come color banding going on, but this could be fixed with a grain post-process effect. I'd like to add a bit of normal-based _EM_ strength variation to make the magnetic bodies look less flat.
+
+### Combined visions Mode
+
+The combined visions mode renders the camera for each of the vision modes and outputs the results of each one into a separate `RenderTexture`. These render textures are created with a 1:1 texel/pixel ratio to avoid unncessary computations and undesired visual artifacts.
+
+These `RenderTextures` are then rendered by 3 `RawImages` contained inside a Canvas. The raw images are laid out to ensure proper alignment and positioning.
+
+I really liked this solution because it doesn't require extra "dummy" cameras to achieve the desired result.
+
+![](readme/combined_visions_mode_example.png)
+
+### Problems and improvements
+
+The only thing I'd improve here would be to blit the three textures directly to the main render target without having to use a `Canvas`.
